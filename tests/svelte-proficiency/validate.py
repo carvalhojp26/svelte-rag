@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-"""
-Validate Svelte code from outputs/{model}/q{n}.svelte by building in a temporary Svelte 5 + Vite project.
-Run from tests/svelte-proficiency/ with: python validate.py
-
-First run models.py to generate .svelte files in outputs/.
-"""
 
 import json
 import re
@@ -20,7 +14,6 @@ RESULTS_FILE = SCRIPT_DIR / "validation_results.json"
 
 
 def extract_svelte_code(text: str) -> str | None:
-    """Extract .svelte code from markdown blocks or raw text."""
     if not text or not text.strip():
         return None
     match = re.search(r"```(?:svelte)?\s*\n(.*?)```", text, re.DOTALL)
@@ -33,7 +26,6 @@ def extract_svelte_code(text: str) -> str | None:
 
 
 def build_svelte_app(cwd: Path) -> tuple[bool, str, str]:
-    """Run npm install + build; return (success, stdout, stderr)."""
     install = subprocess.run(
         ["npm", "install"],
         cwd=cwd,
@@ -60,7 +52,6 @@ def build_svelte_app(cwd: Path) -> tuple[bool, str, str]:
 
 
 def validate_answer(svelte_code: str) -> dict:
-    """Validate by building in a temp copy of the template. Return result dict."""
     with tempfile.TemporaryDirectory() as tmp:
         dst = Path(tmp)
         shutil.copytree(TEMPLATE_DIR, dst, dirs_exist_ok=True)
