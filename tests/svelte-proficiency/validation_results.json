@@ -1,0 +1,62 @@
+{
+  "codellama_latest": {
+    "q1": {
+      "valid": true,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 107 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                 0.33 kB \u2502 gzip:  0.24 kB\ndist/assets/index-Cm1kfpsv.js  27.51 kB \u2502 gzip: 10.68 kB\n\u2713 built in 412ms\n",
+      "stderr": "",
+      "extracted": true
+    },
+    "q2": {
+      "valid": true,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 107 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                 0.33 kB \u2502 gzip:  0.24 kB\ndist/assets/index-HFPRL9fT.js  29.75 kB \u2502 gzip: 11.50 kB\n\u2713 built in 378ms\n",
+      "stderr": "1:05:00 AM [vite-plugin-svelte] src/App.svelte:1:0 `<html>` element should have a lang attribute\nhttps://svelte.dev/e/a11y_missing_attribute\n1: <html>\n         ^\n2:   <head>\n3:     <title>My App</title>\n",
+      "extracted": true
+    },
+    "q3": {
+      "valid": false,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 4 modules transformed.\n",
+      "stderr": "\u2717 Build failed in 51ms\nerror during build:\n[vite-plugin-svelte] [plugin vite-plugin-svelte] src/App.svelte (6:6): /tmp/tmp3w5_cg_k/src/App.svelte:6:6 Unexpected token\nhttps://svelte.dev/e/js_parse_error\nfile: /tmp/tmp3w5_cg_k/src/App.svelte:6:6\n\n 4 |    function MyComponent() {\n 5 |      return (\n 6 |        <div>Hello World!</div>\n            ^\n 7 |      );\n 8 |    }\n\n\n",
+      "extracted": true
+    }
+  },
+  "deepseek-r1_1.5b": {
+    "q1": {
+      "valid": false,
+      "extracted": false,
+      "stdout": "",
+      "stderr": "Could not extract Svelte code from response"
+    },
+    "q2": {
+      "valid": false,
+      "extracted": false,
+      "stdout": "",
+      "stderr": "Could not extract Svelte code from response"
+    },
+    "q3": {
+      "valid": false,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 4 modules transformed.\n",
+      "stderr": "\u2717 Build failed in 51ms\nerror during build:\n[vite-plugin-svelte] [plugin vite-plugin-svelte] src/App.svelte (9:10): /tmp/tmp58l33_fv/src/App.svelte:9:10 Expected token }\nhttps://svelte.dev/e/expected_token\nfile: /tmp/tmp58l33_fv/src/App.svelte:9:10\n\n  7 |        { \n  8 |          new App \n  9 |            { \n                 ^\n 10 |              runes: { \n 11 |                Design: design, \n\n\n",
+      "extracted": true
+    }
+  },
+  "gemma3_latest": {
+    "q1": {
+      "valid": true,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 108 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                  0.40 kB \u2502 gzip:  0.27 kB\ndist/assets/index-D5aVqlk1.css   0.29 kB \u2502 gzip:  0.19 kB\ndist/assets/index-Dj38X4xK.js   27.68 kB \u2502 gzip: 10.75 kB\n\u2713 built in 401ms\n",
+      "stderr": "",
+      "extracted": true
+    },
+    "q2": {
+      "valid": true,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 108 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                  0.40 kB \u2502 gzip:  0.27 kB\ndist/assets/index-shXolGno.css   0.45 kB \u2502 gzip:  0.23 kB\ndist/assets/index-wuLZsY7u.js   26.44 kB \u2502 gzip: 10.40 kB\n\u2713 built in 403ms\n",
+      "stderr": "1:05:10 AM [vite-plugin-svelte] src/App.svelte:21:13 '#' is not a valid href attribute\nhttps://svelte.dev/e/a11y_invalid_attribute\n19:     <h2>Sidebar</h2>\n20:     <ul>\n21:       <li><a href=\"#\">Link 1</a></li>\n                         ^\n22:       <li><a href=\"#\">Link 2</a></li>\n23:       <li><a href=\"#\">Link 3</a></li>\n1:05:10 AM [vite-plugin-svelte] src/App.svelte:22:13 '#' is not a valid href attribute\nhttps://svelte.dev/e/a11y_invalid_attribute\n20:     <ul>\n21:       <li><a href=\"#\">Link 1</a></li>\n22:       <li><a href=\"#\">Link 2</a></li>\n                         ^\n23:       <li><a href=\"#\">Link 3</a></li>\n24:     </ul>\n1:05:10 AM [vite-plugin-svelte] src/App.svelte:23:13 '#' is not a valid href attribute\nhttps://svelte.dev/e/a11y_invalid_attribute\n21:       <li><a href=\"#\">Link 1</a></li>\n22:       <li><a href=\"#\">Link 2</a></li>\n23:       <li><a href=\"#\">Link 3</a></li>\n                         ^\n24:     </ul>\n25:   </aside>\n1:05:10 AM [vite-plugin-svelte] src/App.svelte:65:4 Unused CSS selector \"body\"\nhttps://svelte.dev/e/css_unused_selector\n63:   /* Dark Mode Styles (Apply if darkMode is true) */\n64:   :global([data-theme=\"dark\"]) {\n65:     body {\n            ^\n66:       background-color: #222;\n67:       color: #eee;\n",
+      "extracted": true
+    },
+    "q3": {
+      "valid": true,
+      "stdout": "\n> build\n> vite build\n\nvite v6.4.1 building for production...\ntransforming...\n\u2713 108 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                  0.40 kB \u2502 gzip:  0.27 kB\ndist/assets/index-lfVP0rhu.css   0.21 kB \u2502 gzip:  0.17 kB\ndist/assets/index-DrAYVxOE.js   29.50 kB \u2502 gzip: 11.46 kB\n\u2713 built in 423ms\n",
+      "stderr": "",
+      "extracted": true
+    }
+  }
+}
