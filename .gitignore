@@ -1,0 +1,15 @@
+# env
+.env
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# flashrank model cache
+~/.cache/flashrank/
+
+# ide
+.vscode/
+.idea/
