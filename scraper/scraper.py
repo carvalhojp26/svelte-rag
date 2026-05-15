@@ -16,6 +16,14 @@ def fetch(url: str) -> str:
 
 
 def extract_sections(soup: BeautifulSoup) -> list[dict]:
+    # Remove navigation elements before parsing
+    for nav in soup.find_all(["nav", "aside"]):
+        nav.decompose()
+    for el in soup.find_all(class_=lambda c: c and any(
+        x in c for x in ["sidebar", "toc", "nav", "menu", "on-this-page"]
+    )):
+        el.decompose()
+
     container = soup.find("main") or soup.find("article") or soup.body
     if not container:
         return []
@@ -30,10 +38,10 @@ def extract_sections(soup: BeautifulSoup) -> list[dict]:
         if current is None:
             return
         sections.append({
-            "id": current.get("id", ""),
-            "title": current.get_text(strip=True),
-            "level": int(current.name[1]),
-            "paragraphs": current_paragraphs,
+            "id":          current.get("id", ""),
+            "title":       current.get_text(strip=True),
+            "level":       int(current.name[1]),
+            "paragraphs":  current_paragraphs,
             "code_blocks": current_code_blocks,
         })
         current_paragraphs = []
@@ -49,13 +57,15 @@ def extract_sections(soup: BeautifulSoup) -> list[dict]:
                 if text:
                     current_paragraphs.append(text)
             elif tag.name == "pre":
+                tag_classes = tag.get("class", [])
+                if "twoslash" in tag_classes or "lsp" in tag_classes:
+                    continue
                 code = tag.find("code")
                 if code:
                     current_code_blocks.append(code.get_text(strip=True))
 
     flush_section()
     return sections
-
 
 def scrape_page(url: str) -> dict:
     html = fetch(url)
