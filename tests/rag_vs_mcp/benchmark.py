@@ -2,14 +2,10 @@ import json
 import time
 from datetime import datetime
 from rag.generator import ask
-from rag.mcp_query import ask_mcp
+from svelte_mcp.query import ask_mcp
 
 QUESTIONS = [
     "How do I create a reactive variable in Svelte?",
-    "What is the difference between $state and $derived in Svelte 5?",
-    #"How do I handle form submissions in SvelteKit?",
-    "How do lifecycle functions work in Svelte?",
-    #"How do I use stores in Svelte?",
 ]
 
 def run_benchmark():
@@ -38,7 +34,7 @@ def run_benchmark():
         "results": results
     }
 
-    filename = f"tests/rag-mcp/results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    filename = f"tests/rag_vs_mcp/results/results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(filename, "w") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)
 

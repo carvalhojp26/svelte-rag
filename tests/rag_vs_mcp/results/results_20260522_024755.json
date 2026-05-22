@@ -1,0 +1,14 @@
+{
+  "date": "2026-05-22T02:47:55.069791",
+  "rag_model": "gemma3",
+  "mcp_model": "llama3.1:8b",
+  "results": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag_answer": "To create a reactive variable in Svelte, you can use the `$state` rune. Here's an example:\n\n```javascript\n<script>\n  let count = $state(0);\n</script>\n```\n\nIn this example, `count` is a reactive variable that starts with a value of 0. The `$state` rune makes it explicit that `count` is reactive.\n\nNote that you can read and write directly to the `count` variable without any additional wrappers like `.value` or `getCount()`. This means you can use the same API as before, but now it's more explicit and consistent with Svelte 5's reactivity model.",
+      "rag_latency_s": 35.24,
+      "mcp_answer": "To create a reactive variable in Svelte, you use the `$state` rune. This rune allows you to create reactive state, which means that your UI will react when it changes.\n\nHere's an example of how to use `$state` to create a reactive variable:\n\n```svelte\n<script>\n\tlet count = $state(0);\n</script>\n\n<button onclick={() => count++}>\n\tclicks: {count}\n</button>\n```\n\nIn this example, `count` is a reactive variable that starts at 0. When the button is clicked, the `count` variable is incremented by 1, and the UI will update to reflect the new value.\n\nNote that `$state` is not a function that you call with an argument; it's a rune that you use to declare a reactive variable. You can think of it as a way to \"tag\" a variable as reactive, so that Svelte knows to update the UI when it changes.\n\nAlso, keep in mind that `$state` is not a function that you can call with arguments to create a new reactive variable. Instead, you use it to declare a reactive variable, and then you can assign a value to it just like you would with a regular variable.\n\nFor example, this is not how you use `$state`:\n\n```svelte\n<script>\n\tlet count = $state(0);\n\tcount = $state(1); // This will not create a new reactive variable\n</script>\n```\n\nInstead, you would do something like this:\n\n```svelte\n<script>\n\tlet count = $state(0);\n\tlet newCount = 1;\n</script>\n```\n\nIn this case, `newCount` is a regular variable that is not reactive, while `count` is a reactive variable that starts at 0.",
+      "mcp_latency_s": 2.87
+    }
+  ]
+}
