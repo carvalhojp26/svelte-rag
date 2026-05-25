@@ -10,6 +10,6 @@
 	<link rel="stylesheet" href="/app.css" />
 </svelte:head>
 
-<div class="w-full h-full bg-orange-50">
+<div class="w-full h-full bg-stone-800">
 	{@render children()}
 </div>
