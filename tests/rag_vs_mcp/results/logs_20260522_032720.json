@@ -1,0 +1,28 @@
+{
+  "date": "2026-05-22T03:27:20.527360",
+  "duration_s": 4.11,
+  "questions_count": 1,
+  "models": {
+    "rag": "llama-3.1-8b-instant",
+    "mcp": "llama-3.1-8b-instant"
+  },
+  "summary": {
+    "rag_total_latency_s": 1.24,
+    "mcp_total_latency_s": 2.87,
+    "rag_avg_latency_s": 1.24,
+    "mcp_avg_latency_s": 2.87
+  },
+  "questions": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag": {
+        "status": "ok",
+        "latency_s": 1.24
+      },
+      "mcp": {
+        "status": "ok",
+        "latency_s": 2.87
+      }
+    }
+  ]
+}

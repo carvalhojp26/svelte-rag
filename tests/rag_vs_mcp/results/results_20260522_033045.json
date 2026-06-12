@@ -1,0 +1,14 @@
+{
+  "date": "2026-05-22T03:30:45.507927",
+  "rag_model": "llama-3.1-8b-instant",
+  "mcp_model": "llama-3.1-8b-instant",
+  "results": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag_answer": "To create a reactive variable in Svelte, you can use the `$state` rune. According to the documentation, a variable is reactive when created using the `$state` rune. \n\nHere's an example from the migration guide excerpt:\n\n```javascript\n<script>\n  let count = $state(0);\n</script>\n```\n\nIn this example, `count` is a reactive variable because it's created using the `$state` rune. You can read and write directly to it, without a wrapper like `.value` or `getCount()`.\n\nNote that in Svelte 5, reactivity is more explicit, which means you can use the same API outside the top level of components. This is a change from Svelte 4, where `let` declarations at the top level of a component were implicitly reactive.",
+      "rag_latency_s": 1.05,
+      "mcp_answer": "To create a reactive variable in Svelte, you can use the `$state` rune. The `$state` rune allows you to create reactive state, which means that your UI reacts when it changes.\n\nHere's an example of how to create a reactive variable:\n\n```svelte\n<script>\n\tlet count = $state(0);\n</script>\n\n<button onclick={() => count++}>\n\tclicks: {count}\n</button>\n```\n\nIn this example, `count` is a reactive variable that starts at 0. When the button is clicked, the `count` variable is incremented, and the UI will react to the change.\n\nNote that `$state` is a rune, not a function, so you don't need to import it or call it like a function. You simply use it to declare a reactive variable.\n\nAlso, reactive variables can be arrays or objects, and they will be proxied recursively until Svelte finds something other than an array or simple object. This means that if you modify a property of an object or an array, the UI will react to the change.\n\nFor example:\n\n```svelte\n<script>\n\tlet todos = $state([\n\t\t{\n\t\t\tdone: false,\n\t\t\ttext: 'add more todos'\n\t\t}\n\t]);\n</script>\n\n<button onclick={() => todos[0].done = !todos[0].done}>\n\ttoggle todo\n</button>\n\n<p>{todos[0].done ? 'done' : 'not done'}</p>\n```\n\nIn this example, the `todos` array is a reactive variable, and when the button is clicked, the `done` property of the first todo is toggled. The UI will react to the change, and the paragraph will update to reflect the new state of the todo.",
+      "mcp_latency_s": 2.72
+    }
+  ]
+}

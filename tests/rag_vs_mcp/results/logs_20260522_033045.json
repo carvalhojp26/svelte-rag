@@ -1,0 +1,96 @@
+{
+  "date": "2026-05-22T03:30:45.507927",
+  "duration_s": 3.77,
+  "questions_count": 1,
+  "models": {
+    "rag": "llama-3.1-8b-instant",
+    "mcp": "llama-3.1-8b-instant"
+  },
+  "summary": {
+    "rag_total_latency_s": 1.05,
+    "mcp_total_latency_s": 2.72,
+    "rag_avg_latency_s": 1.05,
+    "mcp_avg_latency_s": 2.72
+  },
+  "questions": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag": {
+        "status": "ok",
+        "latency_s": 1.05,
+        "steps": [
+          {
+            "step": "retrieve",
+            "chunks_found": 30,
+            "latency_s": 0.08
+          },
+          {
+            "step": "rerank",
+            "chunks_kept": 3,
+            "top_sources": [
+              "Svelte 5 migration guide • Svelte Docs > let → $state",
+              "$state • Svelte Docs > Built-in classes",
+              "svelte/reactivity • Svelte Docs > SvelteSet"
+            ],
+            "latency_s": 0.52
+          },
+          {
+            "step": "build_context",
+            "context_chars": 1758
+          },
+          {
+            "step": "generate",
+            "model": "llama-3.1-8b-instant",
+            "prompt_tokens": 503,
+            "completion_tokens": 166,
+            "answer_chars": 706,
+            "latency_s": 0.46
+          }
+        ]
+      },
+      "mcp": {
+        "status": "ok",
+        "latency_s": 2.72,
+        "steps": [
+          {
+            "step": "mcp_initialize",
+            "latency_s": 1.64
+          },
+          {
+            "step": "pick_sections",
+            "sections": [
+              "svelte/$state",
+              "svelte/what-are-runes"
+            ],
+            "used_fallback": false
+          },
+          {
+            "step": "mcp_tool_call",
+            "tool": "get-documentation",
+            "input": {
+              "section": [
+                "svelte/$state",
+                "svelte/what-are-runes"
+              ]
+            },
+            "output_chars": 10322,
+            "is_error": false,
+            "latency_s": 0.2
+          },
+          {
+            "step": "mcp_fetch_total",
+            "latency_s": 1.87
+          },
+          {
+            "step": "generate",
+            "model": "llama-3.1-8b-instant",
+            "prompt_tokens": 2765,
+            "completion_tokens": 359,
+            "answer_chars": 1426,
+            "latency_s": 0.84
+          }
+        ]
+      }
+    }
+  ]
+}

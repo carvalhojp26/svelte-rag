@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-22T14:21:16.106127",
+  "duration_s": 3.31,
+  "questions_count": 1,
+  "models": {
+    "rag": "llama-3.1-8b-instant",
+    "mcp": "llama-3.1-8b-instant"
+  },
+  "summary": {
+    "rag_total_latency_s": 1.02,
+    "mcp_total_latency_s": 2.29,
+    "rag_avg_latency_s": 1.02,
+    "mcp_avg_latency_s": 2.29
+  },
+  "questions": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag": {
+        "status": "ok",
+        "latency_s": 1.02,
+        "steps": [
+          {
+            "step": "retrieve",
+            "chunks_found": 30,
+            "latency_s": 0.04
+          },
+          {
+            "step": "rerank",
+            "chunks_kept": 3,
+            "top_sources": [
+              "Svelte 5 migration guide • Svelte Docs > let → $state",
+              "$state • Svelte Docs > Built-in classes",
+              "svelte/reactivity • Svelte Docs > SvelteSet"
+            ],
+            "latency_s": 0.5
+          },
+          {
+            "step": "build_context",
+            "context_chars": 1758
+          },
+          {
+            "step": "generate",
+            "model": "llama-3.1-8b-instant",
+            "prompt_tokens": 503,
+            "completion_tokens": 200,
+            "answer_chars": 902,
+            "latency_s": 0.48
+          }
+        ]
+      },
+      "mcp": {
+        "status": "error",
+        "error": "Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.1-8b-instant` in organization `org_01ks6nedtyfes9vdd7m1ca9d7e` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 6900, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+        "latency_s": 2.29
+      }
+    }
+  ]
+}

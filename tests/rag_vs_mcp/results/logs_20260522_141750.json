@@ -1,0 +1,58 @@
+{
+  "date": "2026-05-22T14:17:50.866969",
+  "duration_s": 3.27,
+  "questions_count": 1,
+  "models": {
+    "rag": "llama-3.1-8b-instant",
+    "mcp": "llama-3.1-8b-instant"
+  },
+  "summary": {
+    "rag_total_latency_s": 1.43,
+    "mcp_total_latency_s": 1.83,
+    "rag_avg_latency_s": 1.43,
+    "mcp_avg_latency_s": 1.83
+  },
+  "questions": [
+    {
+      "question": "How do I create a reactive variable in Svelte?",
+      "rag": {
+        "status": "ok",
+        "latency_s": 1.43,
+        "steps": [
+          {
+            "step": "retrieve",
+            "chunks_found": 30,
+            "latency_s": 0.35
+          },
+          {
+            "step": "rerank",
+            "chunks_kept": 3,
+            "top_sources": [
+              "Svelte 5 migration guide • Svelte Docs > let → $state",
+              "$state • Svelte Docs > Built-in classes",
+              "svelte/reactivity • Svelte Docs > SvelteSet"
+            ],
+            "latency_s": 0.52
+          },
+          {
+            "step": "build_context",
+            "context_chars": 1758
+          },
+          {
+            "step": "generate",
+            "model": "llama-3.1-8b-instant",
+            "prompt_tokens": 503,
+            "completion_tokens": 273,
+            "answer_chars": 1147,
+            "latency_s": 0.57
+          }
+        ]
+      },
+      "mcp": {
+        "status": "error",
+        "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+        "latency_s": 1.83
+      }
+    }
+  ]
+}
