@@ -1,31 +1,25 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
 
 export const POST: RequestHandler = async ({ request }) => {
-  const { question } = await request.json();
-  console.log('[API] received question:', question);
+  const { question, mode } = await request.json();
+  const RAG_API_URL = process.env.RAG_API_URL ?? 'http://localhost:8000';
+  
+  if (!question?.trim()) {
+    return json({ error: 'No question provided' }, { status: 400 });
+  }
 
   try {
-    const { stdout, stderr } = await execAsync(
-      `/home/carvalhojp/projects/svelte-rag/venv/bin/python3 -m rag.query "${question.replace(/"/g, '\\"')}"`,
-      { cwd: '/home/carvalhojp/projects/svelte-rag' }
-    );
-    console.log('[API] stdout:', stdout);
-    console.log('[API] stderr:', stderr);
+    const res = await fetch(`${RAG_API_URL}/query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, mode }),
+    });
 
-    const answer = stdout.split('Answer:\n')[1]?.trim() ?? stderr;
-
-    const cleaned = answer.startsWith("('") 
-      ? answer.slice(2, answer.indexOf("', ["))
-      : answer;
-    
-    return json({ answer: cleaned.replace(/\\n/g, '\n').replace(/\\'/g, "'") });
+    const data = await res.json();
+    return json({ answer: data.answer });
   } catch (err) {
-    console.error('[API] error:', err);
-    return json({ error: 'RAG failed' }, { status: 500 });
+    console.error(err);
+    return json({ error: 'RAG API failed' }, { status: 500 });
   }
 };

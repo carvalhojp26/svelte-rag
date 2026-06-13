@@ -7,11 +7,80 @@ services:
       POSTGRES_PASSWORD: svelte
       POSTGRES_DB: svelte-rag
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db/dump.sql:/docker-entrypoint-initdb.d/02-dump.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U svelte -d svelte-rag"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+      image: ollama/ollama
+      container_name: svelte-rag-ollama
+      ports:
+        - "11434:11434"
+      volumes:
+        - ollama_data:/root/.ollama
+      restart: unless-stopped
+      healthcheck:
+        test: ["CMD", "ollama", "list"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
+        start_period: 10s
+
+  ollama-setup:
+     image: ollama/ollama
+     container_name: svelte-rag-ollama-setup
+     depends_on:
+       ollama:
+         condition: service_healthy
+     environment:
+       - OLLAMA_HOST=http://svelte-rag-ollama:11434
+     entrypoint: ["ollama", "pull", "nomic-embed-text"]
+     restart: "no"
+
+  rag-api:
+      build:
+        context: .
+        dockerfile: Dockerfile.rag
+      container_name: svelte-rag-api
+      environment:
+        - DATABASE_URL=postgresql://svelte:svelte@db:5432/svelte-rag
+        - OLLAMA_URL=http://svelte-rag-ollama:11434
+        - GROQ_API_KEY=${GROQ_API_KEY}
+      ports:
+        - "8000:8000"
+      depends_on:
+        db:
+          condition: service_healthy
+        ollama:
+          condition: service_healthy
+      restart: unless-stopped
+
+  chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile.chatbot
+    container_name: svelte-rag-chatbot
+    environment:
+      - DATABASE_URL=postgresql://svelte:svelte@db:5432/svelte-rag
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - RAG_API_URL=http://rag-api:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rag-api
     restart: unless-stopped
 
 volumes:
   pgdata:
+  ollama_data:

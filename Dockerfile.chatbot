@@ -1,0 +1,22 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+COPY chatbot/package*.json ./
+RUN npm install
+
+COPY chatbot/ .
+
+RUN DATABASE_URL=postgresql://dummy:dummy@dummy:5432/dummy \
+    BETTER_AUTH_SECRET=dummy \
+    BETTER_AUTH_URL=http://localhost:3000 \
+    GOOGLE_CLIENT_ID=dummy \
+    GOOGLE_CLIENT_SECRET=dummy \
+    RAG_API_URL=http://dummy:8000 \
+    npm run build
+
+EXPOSE 3000
+ENV PORT=3000
+ENV HOST=0.0.0.0
+
+CMD ["node", "build"]

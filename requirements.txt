@@ -3,3 +3,9 @@ pgvector
 requests
 beautifulsoup4
 flashrank
+groq
+fastapi
+uvicorn
+python-dotenv
+mcp
+httpx

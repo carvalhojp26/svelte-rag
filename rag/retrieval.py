@@ -21,6 +21,7 @@ def retrieve(query: str, top_k: int = TOP_K) -> list[dict]:
         SELECT chunk_id, url, page, section, content,
                1 - (embedding <=> %s::vector) AS similarity
         FROM documents
+        WHERE LENGTH(content) > 100
         ORDER BY embedding <=> %s::vector
         LIMIT %s
     """, (vec, vec, top_k))
