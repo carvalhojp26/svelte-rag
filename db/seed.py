@@ -4,18 +4,23 @@ import requests
 import psycopg2
 from pgvector.psycopg2 import register_vector
 from pathlib import Path
+from dotenv import load_dotenv 
 
-DB_URL = os.getenv("DATABASE_URL", "postgresql://svelte:svelte@localhost:5432/svelte-rag")
+load_dotenv()
+
+DB_URL = os.getenv("DATABASE_URL")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/embeddings")
+EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
+
 CHUNKS = Path(__file__).resolve().parent.parent / "scraper/output/chunks.json"
-OLLAMA_URL = "http://localhost:11434/api/embeddings"
-EMBED_MODEL = "nomic-embed-text"
+MAX_CHARS = 4000
 
 def get_conn():
+    if not DB_URL:
+        raise ValueError("DATABASE_URL environment variable is not set")
     conn = psycopg2.connect(DB_URL)
     register_vector(conn)
     return conn
-
-MAX_CHARS = 4000  # nomic-embed-text has a ~512 token limit, ~4000 chars is safe
 
 def embed(text: str) -> list[float]:
     truncated = text[:MAX_CHARS]
@@ -40,7 +45,6 @@ def seed():
     conn = get_conn()
     cur = conn.cursor()
 
-    # Find already-embedded chunks
     cur.execute("SELECT chunk_id FROM documents WHERE embedding IS NOT NULL")
     done = {row[0] for row in cur.fetchall()}
     remaining = [c for c in chunks if c["id"] not in done]
